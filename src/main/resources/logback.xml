@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scanPeriod="60 seconds" debug="false">
+    <property resource="application.properties" />
+    <property name="logging.path" value="${logging.path}" />
+    <!-- 控制台输出 -->
+    <appender name="console-appender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>[%d] [%p] [%C{0}.%M{0}] - %m%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="root-appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--最常用的滚动策略，它根据时间来制定滚动策略，既负责滚动也负责出发滚动-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logging.path}/demo/root.log.%d{yyyy-MM-dd-HH}</FileNamePattern>
+            <maxHistory>3000</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>[%d] [%p] [%C{0}.%M{0}] - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--指定日志的保存点-->
+    <!--滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件-->
+    <appender name="controller-appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--最常用的滚动策略，它根据时间来制定滚动策略，既负责滚动也负责出发滚动&ndash;&gt;-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logging.path}/demo/controller.log.%d{yyyy-MM-dd-HH}</FileNamePattern>
+            <maxHistory>3000</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>[%d] [%p] [%C{0}.%M{0}] - %m%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="service-appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--最常用的滚动策略，它根据时间来制定滚动策略，既负责滚动也负责出发滚动-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logging.path}/demo/service.log.%d{yyyy-MM-dd-HH}</FileNamePattern>
+            <maxHistory>3000</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>[%d] [%p] [%C{0}.%M{0}] - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="dao-appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--最常用的滚动策略，它根据时间来制定滚动策略，既负责滚动也负责出发滚动-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logging.path}/demo/dao.log.%d{yyyy-MM-dd-HH}</FileNamePattern>
+            <maxHistory>3000</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>[%d] [%p] [%C{0}.%M{0}] - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--指定日志的输出点(controller包中)-->
+    <logger name="com.edu.controller" level="INFO" additivity="false">
+        <appender-ref ref="controller-appender"/>
+    </logger>
+
+    <logger name="com.edu.service" level="INFO" additivity="false">
+        <appender-ref ref="service-appender"/>
+    </logger>
+    <!--dao层日志-->
+    <logger name="com.edu.dao" level="INFO" additivity="false">
+        <appender-ref ref="dao-appender"/>
+    </logger>
+    <logger name="com.edu.dao.mapper" level="DEBUG" additivity="false">
+        <appender-ref ref="dao-appender"/>
+    </logger>
+    <logger name="java.sql.Connection" level="DEBUG" additivity="false">
+        <appender-ref ref="dao-appender"/>
+    </logger>
+    <logger name="java.sql.Statement" level="DEBUG" additivity="false">
+        <appender-ref ref="dao-appender"/>
+    </logger>
+    <logger name="java.sql.PreparedStatement" level="DEBUG" additivity="false">
+        <appender-ref ref="dao-appender"/>
+    </logger>
+    <logger name="org.apache.ibatis" level="TRACE" additivity="false">
+        <appender-ref ref="dao-appender"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="console-appender" />
+        <appender-ref ref="root-appender" />
+    </root>
+
+</configuration>
