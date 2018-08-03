@@ -46,8 +46,7 @@ public class ReqAlarmThread implements Runnable{
         String sendType = "";
         StringBuffer contents = new StringBuffer();
         //获取本日domain项目的报警记录
-        List<Alert> alerts;
-        alerts = alertMapper.selectAlertByDomainAndDate(domain, strDate);
+        List<Alert> alerts = alertMapper.selectAlertByDomainAndDate(domain, strDate);
         //获取不同告警次数
         List<CategoryDto> categoryDtos = alertMapper.getCategory(domain, strDate);
         for (CategoryDto dto:categoryDtos){

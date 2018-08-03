@@ -1,6 +1,9 @@
 package com.edu.something.JDK;
 
 
+import java.io.File;
+import java.io.IOException;
+
 /**
  * @author Tangzhihao
  * @date 2017/12/1
@@ -25,8 +28,11 @@ public class test {
     /*public static void main(String[] args) {
 
     }*/
-    public static void main(String[] st) {
-        init.append("zhi");
+    public static void main(String[] st) throws IOException {
+
+
+        boolean newFile = new File("代发工资.excel").createNewFile();
+        /*init.append("zhi");
         System.out.println(init);
         Str tang = new Str("tang");
         Str zhi = new Str("zhi");
@@ -40,7 +46,7 @@ public class test {
         do{
             System.out.println(c.str);
             c = c.next;
-        }while (c!=null);
+        }while (c!=null);*/
 
 
 

@@ -4,6 +4,7 @@ import com.edu.common.EWarnChannel;
 import com.edu.dao.mapper.cat.AlertMapper;
 import com.edu.dao.mapper.cat.ProjectMapper;
 import com.edu.service.quartz.job.Thread.ReqAlarmThread;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -35,11 +36,8 @@ public class DailyJobService {
     }
 
     public void DailJobExecute(){
-        logger.info("进入方法DailJobExecute");
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-        String strDate = sdf.format(date);
+        String strDate = DateFormatUtils.format(new Date(),"yyyy-MM-dd");
         strDate = "2018-04-03";
         List<String> domains = alertMapper.selectDomainByAlertTime(strDate);
         logger.info("strDate: "+strDate);
@@ -47,7 +45,6 @@ public class DailyJobService {
         if(domains.contains("cat")){
             domains.remove("cat");
         }
-        logger.info("domains :"+domains.toString());
         if(null==domains||domains.size()==0){
             return;
         }
